@@ -100,7 +100,7 @@ function filtrarPorCategoria(eventos) {
   }
   let eventosFiltrado = eventos.filter(evento => checked.includes(evento.category));
   return eventosFiltrado
-}
+};
 
 //LISTENER DE EVENTO CHANGE DEL CONTENEDOR DE LOS CHECKBOXS
 $contenedorCheckbox.addEventListener("change", () => {
