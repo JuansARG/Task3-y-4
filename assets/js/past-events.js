@@ -3,24 +3,32 @@ const $contenedorCartas = document.querySelector("#contenedor-cartas");
 const $contenedorBusqueda = document.getElementById("contenedor-busqueda");
 const $contenedorCheckbox = document.getElementById("contenedor-checkbox");
 
-//EXTRAYENDO CATEGORIAS
-let categoriasEventos = data.events.map(evento => evento.category);
-categoriasEventos = new Set(data.events.map(evento => evento.category));
-categoriasEventos = Array.from(categoriasEventos);
-
-//FILTRANDO EVENTOS POR FECHA Y RENDERIZANDO MANUALMENTE
-let $fragment = document.createDocumentFragment();
-let fechaActual = new Date(data.currentDate);
-data.events.forEach(evento => {
-  let fechaEvento = new Date(evento.date);
-  if (fechaEvento < fechaActual) {
-    $fragment.appendChild(crearCarta(evento));
-  }
-  $contenedorCartas.appendChild($fragment);
-});
-
 renderizarBarraBusqueda($contenedorBusqueda);
-renderizarCheckbox(categoriasEventos, $contenedorCheckbox);
+
+//PROBANDO EXTRAER DATOS DE API-EVENTS
+let eventos;
+let categoriasEventos;
+fetch('https://amazing-events.herokuapp.com/api/events')
+  .then(respuesta => respuesta.json())
+    .then(datos => {
+      eventos = datos.events
+      categoriasEventos = eventos.map(evento => evento.category);
+      categoriasEventos = new Set(eventos.map(evento => evento.category));
+      categoriasEventos = Array.from(categoriasEventos);
+      renderizarCheckbox(categoriasEventos, $contenedorCheckbox);
+      renderizarCartas(filtrarEventosPorFecha(eventos, data.currentDate), $contenedorCartas);
+    })
+  .catch(e => null);
+
+//FILTRAR ELEMENTOS POR FECHA
+function filtrarEventosPorFecha(eventos, fecha){
+  let fechaActual = new Date(fecha);
+  let eventosFiltrados = eventos.filter(evento => {
+    let fechaEvento = new Date(evento.date);
+    return fechaEvento < fechaActual;
+  })
+  return eventosFiltrados;
+}
 
 //FUNCION PARA CREAR CADA CARTA DE EVENTO
 function crearCarta(evento) {

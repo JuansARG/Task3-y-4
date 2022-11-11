@@ -18,7 +18,7 @@ header{
 main{
     width: 100%;
     min-height: 80vh;
-    max-height: 800vh;
+    max-height: max-content;
 }
 
 .card > img {
