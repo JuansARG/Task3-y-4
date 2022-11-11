@@ -87,7 +87,6 @@ function filtrarEventosPorFecha(eventos, fecha, bolean) {
     }
   };
 
-
   function extraerCategorias(eventos){
     let categorias = eventos.map(evento => evento.category);
     categorias = new Set(categorias);
