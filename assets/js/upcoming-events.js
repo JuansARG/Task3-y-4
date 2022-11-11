@@ -28,7 +28,7 @@ function filtrarEventosPorFecha(eventos, fecha) {
     return fechaEvento > fechaActual;
   })
   return eventosFiltrados;
-}
+};
 
 //FUNCION PARA CREAR CADA CARTA DE EVENTO
 function crearCarta(evento) {
