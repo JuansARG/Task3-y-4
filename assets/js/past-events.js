@@ -73,7 +73,7 @@ function renderizarCheckbox(categorias, idContenedor) {
   categorias.forEach(categoria => {
     template += `
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="${categoria}" name="${categoria}" value="${categoria}" checked>
+        <input class="form-check-input" type="checkbox" id="${categoria}" name="${categoria}" value="${categoria}">
         <label class="form-check-label" for="${categoria}">${categoria}</label>
       </div>
       `
