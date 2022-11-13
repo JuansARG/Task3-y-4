@@ -41,14 +41,6 @@ fetch('https://amazing-events.herokuapp.com/api/events')
         console.table(estadisticasCategorias2);
         imprimirEstadisiticas(estadisticasCategorias2, 'tabla3');
 
-        
-        
-        
-
-
-
-
-
     })
     .catch(e => console.log(e));
 
