@@ -23,7 +23,7 @@ fetch('https://amazing-events.herokuapp.com/api/events')
         let col2 = eventosPasados[eventosPasados.length - 1].name;
         $tabla1col2.textContent = col2;
         let $tabla1col3 = document.getElementById("tabla1col3");
-        $tabla1col3.textContent = buscarEventoMayorCapacidad(eventosPasados).name;
+        $tabla1col3.textContent = buscarEventoMayorCapacidad(eventos).name;
 
         //TABLA2
         eventosProximos = eventosProximos.map(e => crearEventoResumido(e));
@@ -43,8 +43,6 @@ fetch('https://amazing-events.herokuapp.com/api/events')
 
     })
     .catch(e => console.log(e));
-
-
 
 function ordenarPorAsistencia(eventos) {
     eventos.sort((a, b) => b.percentageOfAttendance - a.percentageOfAttendance);
