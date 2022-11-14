@@ -115,7 +115,7 @@ $contenedorCheckbox.addEventListener("change", () => {
     renderizarNoResultado($contenedorCartas);
   }else{
     renderizarCartas(filtrado, $contenedorCartas);
-  }
+  };
 });
 
 function renderizarNoResultado(idContenedor){

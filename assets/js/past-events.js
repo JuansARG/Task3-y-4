@@ -95,24 +95,42 @@ function filtrarPorBusqueda(eventos) {
 //LISTENER DE EVENTO SUBMIT DEL CONTENEDOR DEL SEARCH
 $contenedorBusqueda.addEventListener("submit", (e) => {
   e.preventDefault();
-  let filtrado = filtrarPorBusqueda(data.events)
+  let filtrado = filtrarPorBusqueda(eventos)
   filtrado = filtrarPorCategoria(filtrado);
-  renderizarCartas(filtrado, $contenedorCartas);
+  if(filtrado.length === 0){
+    renderizarCartas([], $contenedorCartas);
+    renderizarNoResultado($contenedorCartas);
+  }else{
+    renderizarCartas(filtrado, $contenedorCartas);
+  }
 });
 
 //FUNCION DE LOS CHECKBOXS
 function filtrarPorCategoria(eventos) {
   let checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value)
-  if(checked.length === 0){
-    return eventos;
-  }
-  let eventosFiltrado = eventos.filter(evento => checked.includes(evento.category));
-  return eventosFiltrado
+  if (checked.length === 0) {
+    return [];
+  }else{
+    let eventosFiltrado = eventos.filter(evento => checked.includes(evento.category));
+    return eventosFiltrado;
+  };
 };
 
 //LISTENER DE EVENTO CHANGE DEL CONTENEDOR DE LOS CHECKBOXS
 $contenedorCheckbox.addEventListener("change", () => {
-  let filtrado = filtrarPorCategoria(data.events);
+  let filtrado = filtrarPorCategoria(eventos);
   filtrado = filtrarPorBusqueda(filtrado)
-  renderizarCartas(filtrado, $contenedorCartas);
+  if(filtrado.length === 0){
+    renderizarNoResultado($contenedorCartas);
+  }else{
+    renderizarCartas(filtrado, $contenedorCartas);
+  };
 });
+
+function renderizarNoResultado(idContenedor){
+  idContenedor.innerHTML = '';
+  let $h2 = document.createElement('h2');
+  $h2.textContent = 'NO HAY RESULTADO; INTENTE CON OTRA PALABRA O SELECCIONANDO UNA CATEGORIA !'
+  $h2.className = 'text-center';
+  idContenedor.appendChild($h2);
+};
