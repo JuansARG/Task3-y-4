@@ -30,7 +30,7 @@ fetch('https://amazing-events.herokuapp.com/api/events')
         let categoriasEventosProximos = extraerCategorias(eventosProximos);
         let estadisticasCategorias1 = categoriasEventosProximos.map(c => estadisticasPorCategoria(eventosProximos, c));
         ordenarPorGanancias(estadisticasCategorias1);
-        console.table(estadisticasCategorias1);
+        //console.table(estadisticasCategorias1);
         imprimirEstadisiticas(estadisticasCategorias1, 'tabla2');
 
         //TABLA3
@@ -38,7 +38,7 @@ fetch('https://amazing-events.herokuapp.com/api/events')
         let categoriasEventosPasados = extraerCategorias(eventosPasados);
         let estadisticasCategorias2 = categoriasEventosPasados.map(c => estadisticasPorCategoria(eventosPasados, c));
         ordenarPorGanancias(estadisticasCategorias2);
-        console.table(estadisticasCategorias2);
+        //console.table(estadisticasCategorias2);
         imprimirEstadisiticas(estadisticasCategorias2, 'tabla3');
 
     })

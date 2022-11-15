@@ -8,6 +8,7 @@ renderizarBarraBusqueda($contenedorBusqueda);
 //PROBANDO EXTRAER DATOS DE API-EVENTS
 let eventos;
 let categoriasEventos;
+let eventosProximos;
 fetch('https://amazing-events.herokuapp.com/api/events')
   .then(respuesta => respuesta.json())
   .then(datos => {
@@ -15,8 +16,9 @@ fetch('https://amazing-events.herokuapp.com/api/events')
     categoriasEventos = eventos.map(evento => evento.category);
     categoriasEventos = new Set(eventos.map(evento => evento.category));
     categoriasEventos = Array.from(categoriasEventos);
+    eventosProximos = filtrarEventosPorFecha(eventos, data.currentDate)
     renderizarCheckbox(categoriasEventos, $contenedorCheckbox);
-    renderizarCartas(filtrarEventosPorFecha(eventos, data.currentDate), $contenedorCartas);
+    renderizarCartas(eventosProximos, $contenedorCartas);
   })
   .catch(e => null);
 
@@ -95,7 +97,7 @@ function filtrarPorBusqueda(eventos) {
 //LISTENER DE EVENTO SUBMIT DEL CONTENEDOR DEL SEARCH
 $contenedorBusqueda.addEventListener("submit", (e) => {
   e.preventDefault();
-  let filtrado = filtrarPorBusqueda(eventos)
+  let filtrado = filtrarPorBusqueda(eventosProximos)
   filtrado = filtrarPorCategoria(filtrado);
   if(filtrado.length === 0){
     renderizarCartas([], $contenedorCartas);
@@ -118,7 +120,7 @@ function filtrarPorCategoria(eventos) {
 
 //LISTENER DE EVENTO CHANGE DEL CONTENEDOR DE LOS CHECKBOXS
 $contenedorCheckbox.addEventListener("change", () => {
-  let filtrado = filtrarPorCategoria(eventos);
+  let filtrado = filtrarPorCategoria(eventosProximos);
   filtrado = filtrarPorBusqueda(filtrado)
   if(filtrado.length === 0){
     renderizarNoResultado($contenedorCartas);
@@ -130,7 +132,7 @@ $contenedorCheckbox.addEventListener("change", () => {
 function renderizarNoResultado(idContenedor){
   idContenedor.innerHTML = '';
   let $h2 = document.createElement('h2');
-  $h2.textContent = 'NO HAY RESULTADO; INTENTE CON OTRA PALABRA O SELECCIONANDO UNA CATEGORIA !'
+  $h2.textContent = 'NO HAY RESULTADO, INTENTE CON OTRA PALABRA O SELECCIONANDO UNA CATEGORIA !'
   $h2.className = 'text-center';
   idContenedor.appendChild($h2);
 };
