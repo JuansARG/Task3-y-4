@@ -4,8 +4,8 @@ let id = new URLSearchParams(document.location.search).get("id");
 
 fetch('https://amazing-events.herokuapp.com/api/events')
     .then(respuesta => respuesta.json())
-    .then(datos => renderizarEventoDetallado(datos.eventos, id, $main))
-    .catch(e => null);
+    .then(datos => renderizarEventoDetallado(datos.events, id, $main))
+    .catch(e => console.log(e));
 
 function renderizarEventoDetallado(eventos, idEvento, idContenedor) {
     let eventoObjetivo = eventos.find(evento => evento._id === idEvento);
