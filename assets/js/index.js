@@ -86,21 +86,20 @@ function filtrarPorBusqueda(eventos) {
 //LISTENER DE EVENTO SUBMIT DEL CONTENEDOR DEL SEARCH
 $contenedorBusqueda.addEventListener("submit", (e) => {
   e.preventDefault();
-  let filtrado = filtrarPorBusqueda(eventos)
-  filtrado = filtrarPorCategoria(filtrado);
-  if(filtrado.length === 0){
-    renderizarCartas([], $contenedorCartas);
-    renderizarNoResultado($contenedorCartas);
+  let filtrado1 = filtrarPorBusqueda(eventos)
+  let filtrado2 = filtrarPorCategoria(filtrado1);
+  if(filtrado2.length > 0){
+    renderizarCartas(filtrado2, $contenedorCartas);
   }else{
-    renderizarCartas(filtrado, $contenedorCartas);
-  }
+    renderizarNoResultado($contenedorCartas);
+  };
 });
 
 //FUNCION DE LOS CHECKBOXS
 function filtrarPorCategoria(eventos) {
   let checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value)
   if (checked.length === 0) {
-    return [];
+    return eventos;
   }else{
     let eventosFiltrado = eventos.filter(evento => checked.includes(evento.category));
     return eventosFiltrado;
@@ -109,12 +108,12 @@ function filtrarPorCategoria(eventos) {
 
 //LISTENER DE EVENTO CHANGE DEL CONTENEDOR DE LOS CHECKBOXS
 $contenedorCheckbox.addEventListener("change", () => {
-  let filtrado = filtrarPorCategoria(eventos);
-  filtrado = filtrarPorBusqueda(filtrado)
-  if(filtrado.length === 0){
-    renderizarNoResultado($contenedorCartas);
+  let filtrado1 = filtrarPorCategoria(eventos);
+  let filtrado2 = filtrarPorBusqueda(filtrado1)
+  if(filtrado2.length > 0){
+    renderizarCartas(filtrado2, $contenedorCartas);
   }else{
-    renderizarCartas(filtrado, $contenedorCartas);
+    renderizarNoResultado($contenedorCartas);
   };
 });
 

@@ -15,15 +15,12 @@ fetch('https://amazing-events.herokuapp.com/api/events')
         //TABLA1
         eventosPasados = eventosPasados.map(e => crearEventoResumido(e))
         eventosPasados = ordenarPorAsistencia(eventosPasados);
-        //console.table(eventosPasados);
         let $tabla1col1 = document.getElementById("tabla1col1");
-        let col1 = eventosPasados[0].name
-        $tabla1col1.textContent = col1;
+        $tabla1col1.textContent = eventosPasados[0].name;
         let $tabla1col2 = document.getElementById("tabla1col2");
-        let col2 = eventosPasados[eventosPasados.length - 1].name;
-        $tabla1col2.textContent = col2;
+        $tabla1col2.textContent = eventosPasados[eventosPasados.length - 1].name;
         let $tabla1col3 = document.getElementById("tabla1col3");
-        $tabla1col3.textContent = buscarEventoMayorCapacidad(eventos).name;
+        $tabla1col3.textContent = buscarEventoMayorCapacidad(eventosPasados).name;
 
         //TABLA2
         eventosProximos = eventosProximos.map(e => crearEventoResumido(e));

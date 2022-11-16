@@ -86,9 +86,9 @@ function renderizarCheckbox(categorias, idContenedor) {
 //RECIBE LISTA DE EVENTOS Y VALOR DEL SEARCH PARA FILTRAR Y DEVOLVER NUEVA LISTA DE EVENTOS FILTRADOS
 function filtrarPorBusqueda(eventos) {
   let valor = (document.getElementById("input-busqueda")).value.trim().toLowerCase();
-  if(valor === ""){
+  if (valor === "") {
     return eventos;
-  }else{
+  } else {
     let eventosFiltrados = eventos.filter(evento => evento.name.toLowerCase().includes(valor));
     return eventosFiltrados;
   }
@@ -97,21 +97,20 @@ function filtrarPorBusqueda(eventos) {
 //LISTENER DE EVENTO SUBMIT DEL CONTENEDOR DEL SEARCH
 $contenedorBusqueda.addEventListener("submit", (e) => {
   e.preventDefault();
-  let filtrado = filtrarPorBusqueda(eventosPasados)
-  filtrado = filtrarPorCategoria(filtrado);
-  if(filtrado.length === 0){
-    renderizarCartas([], $contenedorCartas);
-    renderizarNoResultado($contenedorCartas);
+  let filtrado1 = filtrarPorBusqueda(eventos)
+  let filtrado2 = filtrarPorCategoria(filtrado1);
+  if(filtrado2.length > 0){
+    renderizarCartas(filtrado2, $contenedorCartas);
   }else{
-    renderizarCartas(filtrado, $contenedorCartas);
-  }
+    renderizarNoResultado($contenedorCartas);
+  };
 });
 
 //FUNCION DE LOS CHECKBOXS
 function filtrarPorCategoria(eventos) {
   let checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value)
   if (checked.length === 0) {
-    return [];
+    return eventos;
   }else{
     let eventosFiltrado = eventos.filter(evento => checked.includes(evento.category));
     return eventosFiltrado;
@@ -120,12 +119,12 @@ function filtrarPorCategoria(eventos) {
 
 //LISTENER DE EVENTO CHANGE DEL CONTENEDOR DE LOS CHECKBOXS
 $contenedorCheckbox.addEventListener("change", () => {
-  let filtrado = filtrarPorCategoria(eventosPasados);
-  filtrado = filtrarPorBusqueda(filtrado)
-  if(filtrado.length === 0){
-    renderizarNoResultado($contenedorCartas);
+  let filtrado1 = filtrarPorCategoria(eventos);
+  let filtrado2 = filtrarPorBusqueda(filtrado1)
+  if(filtrado2.length > 0){
+    renderizarCartas(filtrado2, $contenedorCartas);
   }else{
-    renderizarCartas(filtrado, $contenedorCartas);
+    renderizarNoResultado($contenedorCartas);
   };
 });
 
